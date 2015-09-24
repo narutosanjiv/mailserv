@@ -171,7 +171,6 @@ ln -sf /usr/local/bin/rails21 /usr/local/bin/rails
 ln -sf /usr/local/bin/bundle21 /usr/local/bin/bundle
 ln -sf /usr/local/bin/bundler21 /usr/local/bin/bundler
 
-/usr/local/bin/gem install mysql -V
 /usr/local/bin/gem install fastercsv -V
 
 echo " -- Step 16 - setup god"
