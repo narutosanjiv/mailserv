@@ -189,6 +189,8 @@ echo "root: |/usr/local/share/mailserv/sysmail.rb" >> /etc/mail/aliases
 /usr/bin/newaliases >/dev/null 2>&1
 
 ################################ NEED TO BE CORRECTED ################################
+exit 0
+
 /usr/local/bin/rake -s -f /var/mailserv/admin/Rakefile system:update_hostname RAILS_ENV=production
 
 echo " -- Step 18 - create databases"
