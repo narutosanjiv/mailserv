@@ -1,4 +1,4 @@
-# Mailserv for the last OpenBSD release : 5.7
+# Mailserv for the last OpenBSD release : 
 
 To install (from a fresh OpenBSD 5.7):<br>
 <code>export PKG_PATH=http://ftp2.fr.openbsd.org/pub/OpenBSD/5.7/packages/amd64/</code>  
