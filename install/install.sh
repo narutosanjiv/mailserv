@@ -1,7 +1,7 @@
 #!/bin/sh
 # Last changes : 2015/09/24, Wesley MOUEDINE ASSABY
 # Contact me :  wesley at mouedine dot net
-# MISSING PARTS : CRON / NGINX / MONGREL 
+# MISSING PARTS : CRON / NGINX / MONGREL / RUBY ON RAILS APPS 
 
 TEMPLATES=/var/mailserv/install/templates
 
@@ -213,6 +213,4 @@ function SetAdmin {
 rake -s -f /var/mailserv/admin/Rakefile  mailserv:add_admin
 }
 
-# If you want to run the install, just add 'DoTheJob' below
-
-# If you want to set an admin, just add 'SetAdmin' below
+DoTheJob
