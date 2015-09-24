@@ -44,7 +44,7 @@ echo " -- Step 4 - enable and start ntpd"
 
 echo " -- Step 5 - setup Mariadb-Server"
 /usr/local/bin/mysql_install_db > /dev/null 2>&1
-install -m 644 $INSTALLPATH/conf/my.cnf /etc
+install -m 644 $TEMPLATES/my.cnf /etc
 
 /usr/sbin/rcctl enable mysqld
 /usr/sbin/rcctl start mysqld
@@ -63,11 +63,11 @@ ln -sf /etc/php-5.5.sample/zip.ini /etc/php-5.5/zip.ini
 echo " -- Step 7 - setup postfix"
 /usr/local/sbin/postfix-enable
 
-install -m 644 $INSTALLPATH/conf/postfix/main.cf /etc/postfix
-install -m 644 $INSTALLPATH/conf/postfix/master.cf /etc/postfix
-install -m 644 $INSTALLPATH/conf/postfix/header_checks.pcre /etc/postfix
-install -m 644 $INSTALLPATH/conf/postfix/milter_header_checks /etc/postfix
-cp -r $INSTALLPATH/conf/postfix/sql /etc/postfix/
+install -m 644 $TEMPLATES/postfix/main.cf /etc/postfix
+install -m 644 $TEMPLATES/postfix/master.cf /etc/postfix
+install -m 644 $TEMPLATES/postfix/header_checks.pcre /etc/postfix
+install -m 644 $TEMPLATES/postfix/milter_header_checks /etc/postfix
+cp -r $TEMPLATES/postfix/sql /etc/postfix/
 chmod -R 755 /etc/postfix/sql
 
 /usr/sbin/rcctl enable postfix
@@ -118,7 +118,7 @@ install -m 644 $TEMPLATES/dovecot-sql.conf /etc/dovecot
 /usr/sbin/rcctl start dovecot
 
 echo " -- Step 12 - setup sqlgrey"
-install -m 644 $INSTALLPATH/conf/sqlgrey.conf /etc/sqlgrey
+install -m 644 $TEMPLATES/sqlgrey.conf /etc/sqlgrey
 /usr/local/bin/mysqladmin create sqlgrey
 /usr/local/bin/mysql -e "grant all privileges on sqlgrey.* to 'sqlgrey'@'localhost' identified by 'sqlgrey';"
 /usr/sbin/rcctl enable sqlgrey
