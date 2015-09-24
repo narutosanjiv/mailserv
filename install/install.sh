@@ -61,6 +61,7 @@ ln -sf /etc/php-5.5.sample/zip.ini /etc/php-5.5/zip.ini
 /usr/sbin/rcctl start php_fpm
 
 echo " -- Step 7 - setup postfix"
+/usr/local/sbin/postfix-disable
 /usr/local/sbin/postfix-enable
 
 install -m 644 $TEMPLATES/postfix/main.cf /etc/postfix
