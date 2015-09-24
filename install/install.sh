@@ -122,7 +122,7 @@ install -m 644 $TEMPLATES/sqlgrey.conf /etc/sqlgrey
 /usr/local/bin/mysqladmin create sqlgrey
 /usr/local/bin/mysql -e "grant all privileges on sqlgrey.* to 'sqlgrey'@'localhost' identified by 'sqlgrey';"
 /usr/sbin/rcctl enable sqlgrey
-/usr/sbin/rcctl start sqlgrey
+/usr/sbin/rcctl start sqlgrey && sleep 2
 /usr/local/bin/mysql sqlgrey -e "alter table connect add id int primary key auto_increment first;"
 touch /etc/sqlgrey/clients_fqdn_whitelist.local 2> /dev/null
 touch /etc/sqlgrey/clients_ip_whitelist.local 2> /dev/null
