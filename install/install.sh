@@ -220,6 +220,7 @@ cd /var/mailserv/admin && /usr/local/bin/rake -s db:migrate RAILS_ENV=production
 /usr/local/bin/mysql mail < /var/mailserv/install/templates/sql/mail.sql
 /usr/local/bin/mysql < /var/mailserv/install/templates/sql/spamcontrol.sql
 /usr/local/bin/ruby /var/mailserv/scripts/rrdmon_create.rb
+}
 
 function SetAdmin {
 rake -s -f /var/mailserv/admin/Rakefile  mailserv:add_admin
