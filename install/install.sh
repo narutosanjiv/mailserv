@@ -195,9 +195,9 @@ echo "root: |/usr/local/share/mailserv/sysmail.rb" >> /etc/mail/aliases
 echo " -- Step 18 - setup roundcube"
 /var/mailserv/scripts/install_roundcube
 /usr/local/bin/mysqladmin create webmail
-/usr/local/bin/mysql webmail < /var/www/roundcubemail/SQL/mysql.initial.sql
+/usr/local/bin/mysql webmail < /var/www/webmail/webmail/SQL/mysql.initial.sql
 /usr/local/bin/mysql webmail -e "grant all privileges on webmail.* to 'webmail'@'localhost' identified by 'webmail'"
-cp /var/mailserv/admin/public/favicon.ico /var/www/roundcubemail/
+cp /var/mailserv/admin/public/favicon.ico /var/www/webmail/webmail/
 
 echo " -- Step 19 - nginx"
 install -m 644 $TEMPLATES/nginx.conf /etc/nginx/
