@@ -58,7 +58,7 @@ ln -sf /etc/php-5.5.sample/pdo_mysql.ini /etc/php-5.5/pdo_mysql.ini
 ln -sf /etc/php-5.5.sample/pspell.ini /etc/php-5.5/pspell.ini
 ln -sf /etc/php-5.5.sample/zip.ini /etc/php-5.5/zip.ini
 ln -sf /usr/local/bin/php-5.5 /usr/local/bin/php
-
+install -m 644 $TEMPLATES/php-fpm.conf /etc/
 /usr/sbin/rcctl enable php_fpm
 /usr/sbin/rcctl start php_fpm
 
@@ -195,26 +195,23 @@ echo " -- Step 18 - setup roundcube"
 /usr/local/bin/mysql webmail < /var/www/roundcubemail/SQL/mysql.initial.sql
 /usr/local/bin/mysql webmail -e "grant all privileges on webmail.* to 'webmail'@'localhost' identified by 'webmail'"
 cp /var/mailserv/admin/public/favicon.ico /var/www/roundcubemail/
-basedir="/var/www/roundcubemail"
-git clone https://github.com/JohnDoh/Roundcube-Plugin-Context-Menu.git $basedir/plugins/contextmenu
-git clone https://github.com/JohnDoh/Roundcube-Plugin-SieveRules-Managesieve.git $basedir/plugins/sieverules
-git clone https://github.com/JohnDoh/Roundcube-Plugin-SpamAssassin-User-Prefs-SQL.git $basedir/plugins/sauserprefs
-install -m 644 /var/mailserv/install/templates/roundcube/conf/main.inc.php $basedir/config/
-install -m 644 /var/mailserv/install/templates/roundcube/conf/db.inc.php $basedir/config/
-install -m 644 /var/mailserv/install/templates/roundcube/sieverules/config.inc.php $basedir/plugins/sieverules/
-install -m 644 /var/mailserv/install/templates/roundcube/sauserprefs/config.inc.php $basedir/plugins/sauserprefs/
-install -m 644 /var/mailserv/install/templates/roundcube/password/config.inc.php $basedir/plugins/password/
+/var/mailserv/scripts/install_roundcube
 
-echo " -- Step 19 - setup awstats"
+echo " -- Step 19 - nginx"
+install -m 644 $TEMPLATES/nginx.conf /etc/nginx/
+/usr/sbin/rcctl enable nginx
+/usr/sbin/rcctl set nginx flags -u
+/usr/sbin/rcctl start nginx
 
-
+echo " -- Step 20 - setup awstats"
+/var/mailserv/scripts/install_awstats
 
 ################################ NEED TO BE CORRECTED ################################
 exit 0
 
 /usr/local/bin/rake -s -f /var/mailserv/admin/Rakefile system:update_hostname RAILS_ENV=production
 
-echo " -- Step 19 - create databases"
+echo " -- Step 21 - create databases"
 /usr/local/bin/mysql -e "grant select on mail.* to 'postfix'@'localhost' identified by 'postfix';"
 /usr/local/bin/mysql -e "grant all privileges on mail.* to 'mailadmin'@'localhost' identified by 'mailadmin';"
 cd /var/mailserv/admin && /usr/local/bin/rake -s db:setup RAILS_ENV=production
@@ -228,3 +225,4 @@ rake -s -f /var/mailserv/admin/Rakefile  mailserv:add_admin
 }
 
 DoTheJob
+# SetAdmin
