@@ -18,7 +18,8 @@ echo " -- Step 1 - install packages"
 pkg_add lynx ImageMagick mariadb-server gtar-1.28p0 gsed clamav postfix-2.11.4-mysql \
     p5-Mail-SpamAssassin dovecot-mysql dovecot-pigeonhole sqlgrey nginx-1.7.10 php-5.5.22 \
     php-mysql-5.5.22 php-pdo_mysql-5.5.22 php-fpm-5.5.22 php-zip-5.5.22 php-mcrypt-5.5.22 \
-    php-intl-5.5.22 php-pspell-5.5.22 ruby-rrd-1.4.9 ruby21-highline-1.6.21 ruby21-mysql-2.9.1 node god
+    php-intl-5.5.22 php-pspell-5.5.22 ruby-rrd-1.4.9 ruby21-highline-1.6.21 ruby21-mysql-2.9.1 \
+    node god roundcubemail
 
 install $TEMPLATES/fs/bin/* /usr/local/bin/
 install $TEMPLATES/fs/sbin/* /usr/local/sbin/
@@ -56,6 +57,7 @@ ln -sf /etc/php-5.5.sample/mysql.ini /etc/php-5.5/mysql.ini
 ln -sf /etc/php-5.5.sample/pdo_mysql.ini /etc/php-5.5/pdo_mysql.ini
 ln -sf /etc/php-5.5.sample/pspell.ini /etc/php-5.5/pspell.ini
 ln -sf /etc/php-5.5.sample/zip.ini /etc/php-5.5/zip.ini
+ln -sf /usr/local/bin/php-5.5 /usr/local/bin/php
 
 /usr/sbin/rcctl enable php_fpm
 /usr/sbin/rcctl start php_fpm
@@ -188,12 +190,31 @@ install -m 644 $TEMPLATES/monthly.local /etc
 echo "root: |/usr/local/share/mailserv/sysmail.rb" >> /etc/mail/aliases
 /usr/bin/newaliases >/dev/null 2>&1
 
+echo " -- Step 18 - setup roundcube"
+/usr/local/bin/mysqladmin create webmail
+/usr/local/bin/mysql webmail < /var/www/roundcubemail/SQL/mysql.initial.sql
+/usr/local/bin/mysql webmail -e "grant all privileges on webmail.* to 'webmail'@'localhost' identified by 'webmail'"
+cp /var/mailserv/admin/public/favicon.ico /var/www/roundcubemail/
+basedir="/var/www/roundcubemail"
+git clone https://github.com/JohnDoh/Roundcube-Plugin-Context-Menu.git $basedir/plugins/contextmenu
+git clone https://github.com/JohnDoh/Roundcube-Plugin-SieveRules-Managesieve.git $basedir/plugins/sieverules
+git clone https://github.com/JohnDoh/Roundcube-Plugin-SpamAssassin-User-Prefs-SQL.git $basedir/plugins/sauserprefs
+install -m 644 /var/mailserv/install/templates/roundcube/conf/main.inc.php $basedir/config/
+install -m 644 /var/mailserv/install/templates/roundcube/conf/db.inc.php $basedir/config/
+install -m 644 /var/mailserv/install/templates/roundcube/sieverules/config.inc.php $basedir/plugins/sieverules/
+install -m 644 /var/mailserv/install/templates/roundcube/sauserprefs/config.inc.php $basedir/plugins/sauserprefs/
+install -m 644 /var/mailserv/install/templates/roundcube/password/config.inc.php $basedir/plugins/password/
+
+echo " -- Step 19 - setup awstats"
+
+
+
 ################################ NEED TO BE CORRECTED ################################
 exit 0
 
 /usr/local/bin/rake -s -f /var/mailserv/admin/Rakefile system:update_hostname RAILS_ENV=production
 
-echo " -- Step 18 - create databases"
+echo " -- Step 19 - create databases"
 /usr/local/bin/mysql -e "grant select on mail.* to 'postfix'@'localhost' identified by 'postfix';"
 /usr/local/bin/mysql -e "grant all privileges on mail.* to 'mailadmin'@'localhost' identified by 'mailadmin';"
 cd /var/mailserv/admin && /usr/local/bin/rake -s db:setup RAILS_ENV=production
@@ -201,15 +222,6 @@ cd /var/mailserv/admin && /usr/local/bin/rake -s db:migrate RAILS_ENV=production
 /usr/local/bin/mysql mail < /var/mailserv/install/templates/sql/mail.sql
 /usr/local/bin/mysql < /var/mailserv/install/templates/sql/spamcontrol.sql
 /usr/local/bin/ruby /var/mailserv/scripts/rrdmon_create.rb
-
-echo " -- Step 19 - setup roundcube and awstats"
-/var/mailserv/scripts/install_roundcube
-/usr/local/bin/mysqladmin create webmail
-/usr/local/bin/mysql webmail < /var/www/webmail/webmail/SQL/mysql.initial.sql
-/usr/local/bin/mysql webmail -e "grant all privileges on webmail.* to 'webmail'@'localhost' identified by 'webmail'"
-cp /var/mailserv/admin/public/favicon.ico /var/www/webmail/webmail/
-/var/mailserv/scripts/install_awstats
-}
 
 function SetAdmin {
 rake -s -f /var/mailserv/admin/Rakefile  mailserv:add_admin
