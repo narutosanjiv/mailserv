@@ -1,7 +1,7 @@
 #!/bin/sh
 # Last changes : 2015/09/24, Wesley MOUEDINE ASSABY
 # Contact me :  wesley at mouedine dot net
-# MISSING PARTS : CRON / NGINX / MONGREL / RUBY ON RAILS APPS / ROUNDCUBE
+# MISSING PARTS : CRON / MONGREL / RUBY ON RAILS APPS
 
 TEMPLATES=/var/mailserv/install/templates
 
