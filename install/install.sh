@@ -1,7 +1,7 @@
 #!/bin/sh
 # Last changes : 2015/09/24, Wesley MOUEDINE ASSABY
 # Contact me :  wesley at mouedine dot net
-# MISSING PARTS : CRON / MONGREL / RUBY ON RAILS APPS
+# MISSING PARTS : RUBY ON RAILS APPS
 
 TEMPLATES=/var/mailserv/install/templates
 
@@ -184,6 +184,7 @@ install -m 644 $TEMPLATES/login.conf /etc
 install -m 644 $TEMPLATES/rrdmon.conf /etc
 install -m 644 $TEMPLATES/daily.local /etc
 install -m 644 $TEMPLATES/monthly.local /etc
+install -m 600 $TEMPLATES/crontab_root /var/cron/tabs/root
 
 /usr/local/bin/ruby -pi -e '$_.gsub!(/\/var\/spool\/mqueue/, "Mail queue")' /etc/daily
 
