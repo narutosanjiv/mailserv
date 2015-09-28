@@ -19,7 +19,7 @@ pkg_add lynx ImageMagick mariadb-server gtar-1.28p0 gsed clamav postfix-2.11.4-m
     p5-Mail-SpamAssassin dovecot-mysql dovecot-pigeonhole sqlgrey nginx-1.7.10 php-5.5.22 \
     php-mysql-5.5.22 php-pdo_mysql-5.5.22 php-fpm-5.5.22 php-zip-5.5.22 php-mcrypt-5.5.22 \
     php-intl-5.5.22 php-pspell-5.5.22 ruby-rrd-1.4.9 ruby21-highline-1.6.21 ruby21-mysql-2.9.1 \
-    node god roundcubemail
+    node god roundcubemail xcache
 
 install $TEMPLATES/fs/bin/* /usr/local/bin/
 install $TEMPLATES/fs/sbin/* /usr/local/sbin/
@@ -57,6 +57,7 @@ ln -sf /etc/php-5.5.sample/mysql.ini /etc/php-5.5/mysql.ini
 ln -sf /etc/php-5.5.sample/pdo_mysql.ini /etc/php-5.5/pdo_mysql.ini
 ln -sf /etc/php-5.5.sample/pspell.ini /etc/php-5.5/pspell.ini
 ln -sf /etc/php-5.5.sample/zip.ini /etc/php-5.5/zip.ini
+ln -fs /etc/php-5.5.sample/xcache.ini /etc/php-5.5/xcache.ini
 ln -sf /usr/local/bin/php-5.5 /usr/local/bin/php
 install -m 644 $TEMPLATES/php-fpm.conf /etc/
 /usr/sbin/rcctl enable php_fpm
