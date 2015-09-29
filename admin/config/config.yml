@@ -1,2 +1,3 @@
 production:
   product: mailserver
+  web_client_url: http://www.google.fr/
