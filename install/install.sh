@@ -1,7 +1,7 @@
 #!/bin/sh
 # Last changes : 2015/09/28, Wesley MOUEDINE ASSABY
-# Contact me :  wesley at mouedine dot net
-# MISSING PARTS : RUBY ON RAILS APPS
+# Contact me at  wesley at mouedine dot net
+# The RubyOnRails app (web admin) : under active development by joshsoftware - www.joshsoftware.com
 
 TEMPLATES=/var/mailserv/install/templates
 
