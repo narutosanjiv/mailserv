@@ -1,5 +1,5 @@
 #!/bin/sh
-# Last changes : 2015/09/28, Wesley MOUEDINE ASSABY
+# Last changes : 2015/09/29, Wesley MOUEDINE ASSABY
 # Contact me at  wesley at mouedine dot net
 # The RubyOnRails app (web admin) : under active development by joshsoftware - www.joshsoftware.com
 
@@ -199,7 +199,7 @@ echo " -- Step 18 - setup roundcube"
 /usr/local/bin/mysql webmail -e "grant all privileges on webmail.* to 'webmail'@'localhost' identified by 'webmail'"
 cp /var/mailserv/admin/public/favicon.ico /var/www/webmail/webmail/
 
-echo " -- Step 19 - nginx"
+echo " -- Step 19 - setup nginx"
 install -m 644 $TEMPLATES/nginx.conf /etc/nginx/
 /usr/sbin/rcctl enable nginx
 /usr/sbin/rcctl set nginx flags -u
