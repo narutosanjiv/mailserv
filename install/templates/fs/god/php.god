@@ -2,9 +2,9 @@ God.watch do |w|
   w.name = "php"
   w.interval = 30.seconds 
   w.pid_file = "/var/run/php-fpm.pid"
-  w.start = "/usr/local/sbin/php-fpm-5.4 -y /etc/php-fpm.conf"
-  w.stop = "kill `cat /var/run/php-fpm.pid`"
-  w.restart = "kill -HUP `cat /var/run/php-fpm.pid`"
+  w.start = "/usr/sbin/rcctl start php_fpm"
+  w.stop = "/usr/sbin/rcctl stop php_fpm"
+  w.restart = "/usr/sbin/rcctl restart php_fpm"
   w.start_grace = 20.seconds
   w.restart_grace = 10.seconds
   w.pid_file = "/var/run/php-fpm.pid" 
