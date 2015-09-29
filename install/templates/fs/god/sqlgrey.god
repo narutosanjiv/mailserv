@@ -4,9 +4,9 @@
 God.watch do |w|
   w.name = "sqlgrey"
   w.interval = 30.seconds # default
-  w.start = "/usr/local/sbin/sqlgrey -d"
-  w.stop = "/usr/local/sbin/sqlgrey -k"
-  w.restart = "kill -HUP `cat /var/run/sqlgrey.pid`"
+  w.start = "/usr/sbin/rcctl start sqlgrey"
+  w.stop = "/usr/sbin/rcctl stop sqlgrey"
+  w.restart = "/usr/sbin/rcctl restart sqlgrey"
   w.start_grace = 10.seconds
   w.restart_grace = 10.seconds
   w.pid_file = "/var/run/sqlgrey.pid"
