@@ -5,9 +5,9 @@ God.watch do |w|
   w.name = "spamd"
   w.group = "mailserv"
   w.interval = 30.seconds # default
-  w.start = @spamd_command
-  w.stop = "kill `cat /var/run/spamd.pid`"
-  w.restart = "kill `cat /var/run/spamd.pid`; sleep 1; #{@spamd_command}"
+  w.start = "/usr/sbin/rcctl start spamassassin"
+  w.stop = "/usr/sbin/rcctl stop spamassassin"
+  w.restart = "/usr/sbin/rcctl restart spamassassin"
   w.start_grace = 10.seconds
   w.restart_grace = 10.seconds
   w.pid_file = "/var/run/spamd.pid"
