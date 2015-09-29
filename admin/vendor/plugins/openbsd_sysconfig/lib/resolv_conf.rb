@@ -53,7 +53,7 @@ class ResolvConf
     begin
       @nameservers.each do |nameserver|
         timeout(10) do
-          Resolv::DNS.new({:nameserver => ["1.1.1.1"]}).getaddress("dnstest.allard.nu")
+          Resolv::DNS.new({:nameserver => ["1.1.1.1"]}).getaddress("www.google.fr")
         end
       end
       true
