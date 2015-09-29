@@ -9,9 +9,9 @@
 God.watch do |w|
   w.name = "mysql"
   w.interval = 30.seconds # default
-  w.start = "/usr/local/bin/mysqld_safe &"
-  w.stop = "/usr/local/bin/mysqladmin shutdown"
-  w.restart = "/usr/local/bin/mysqladmin reload"
+  w.start = "/usr/sbin/rcctl mysqld start"
+  w.stop = "/usr/sbin/rcctl mysqld stop"
+  w.restart = "/usr/sbin/rcctl mysqld reload"
   w.start_grace = 10.seconds
   w.restart_grace = 10.seconds
   w.pid_file = "/var/run/mysql/mysql.pid"
