@@ -208,7 +208,7 @@ install -m 644 $TEMPLATES/nginx.conf /etc/nginx/
 echo " -- Step 20 - setup awstats"
 /var/mailserv/scripts/install_awstats
 
-################################ NEED TO BE CORRECTED ################################
+################################ active development ################################
 exit 0
 
 /usr/local/bin/rake -s -f /var/mailserv/admin/Rakefile system:update_hostname RAILS_ENV=production
