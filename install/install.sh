@@ -184,7 +184,6 @@ install -m 644 $TEMPLATES/*syslog.conf /etc
 install -m 644 $TEMPLATES/login.conf /etc
 install -m 644 $TEMPLATES/rrdmon.conf /etc
 install -m 644 $TEMPLATES/daily.local /etc
-install -m 644 $TEMPLATES/monthly.local /etc
 install -m 600 $TEMPLATES/crontab_root /var/cron/tabs/root
 
 /usr/local/bin/ruby -pi -e '$_.gsub!(/\/var\/spool\/mqueue/, "Mail queue")' /etc/daily
