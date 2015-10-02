@@ -102,9 +102,8 @@ fi
 
 /usr/sbin/rcctl enable clamd
 /usr/sbin/rcctl enable freshclam
-sleep 2
-/usr/sbin/rcctl start clamd
 /usr/sbin/rcctl start freshclam
+/usr/sbin/rcctl start clamd
 
 echo " -- Step 10 - create certificates"
 /usr/bin/openssl genrsa -out /etc/ssl/private/server.key 2048 2>/dev/null
