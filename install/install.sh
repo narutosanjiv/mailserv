@@ -1,5 +1,5 @@
 #!/bin/sh
-# Last changes : 2015/09/29, Wesley MOUEDINE ASSABY
+# Last changes : 2015/10/2, Wesley MOUEDINE ASSABY
 # Contact me at  wesley at mouedine dot net
 # The RubyOnRails app (web admin) : under active development by joshsoftware - www.joshsoftware.com
 
@@ -102,6 +102,7 @@ fi
 
 /usr/sbin/rcctl enable clamd
 /usr/sbin/rcctl enable freshclam
+sleep 2
 /usr/sbin/rcctl start clamd
 /usr/sbin/rcctl start freshclam
 
