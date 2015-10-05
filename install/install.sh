@@ -97,13 +97,13 @@ touch /var/log/freshclam.log 2> /dev/null
 chown _clamav:_clamav /var/log/freshclam.log
 mkdir -p /var/db/clamav
 chown -R _clamav:_clamav /var/db/clamav
-/usr/local/bin/freshclam --no-warnings
+#/usr/local/bin/freshclam --no-warnings
 fi
 
 /usr/sbin/rcctl enable clamd
 /usr/sbin/rcctl enable freshclam
 /usr/sbin/rcctl start freshclam
-/usr/sbin/rcctl start clamd
+sleep 10 && /usr/sbin/rcctl start clamd
 
 echo " -- Step 10 - create certificates"
 /usr/bin/openssl genrsa -out /etc/ssl/private/server.key 2048 2>/dev/null
