@@ -1,5 +1,5 @@
 #!/bin/sh
-# Last changes : 2015/10/2, Wesley MOUEDINE ASSABY
+# Last changes : 2015/10/5, Wesley MOUEDINE ASSABY
 # Contact me at  wesley at mouedine dot net
 # The RubyOnRails app (web admin) : under active development by joshsoftware - www.joshsoftware.com
 
@@ -204,15 +204,12 @@ install -m 644 $TEMPLATES/nginx.conf /etc/nginx/
 /usr/sbin/rcctl set nginx flags -u
 /usr/sbin/rcctl start nginx
 
-echo " -- Step 20 - setup awstats"
-/var/mailserv/scripts/install_awstats
-
 ################################ active development ################################
 exit 0
 
 /usr/local/bin/rake -s -f /var/mailserv/admin/Rakefile system:update_hostname RAILS_ENV=production
 
-echo " -- Step 21 - create databases"
+echo " -- Step 20 - create databases"
 /usr/local/bin/mysql -e "grant select on mail.* to 'postfix'@'localhost' identified by 'postfix';"
 /usr/local/bin/mysql -e "grant all privileges on mail.* to 'mailadmin'@'localhost' identified by 'mailadmin';"
 cd /var/mailserv/admin && /usr/local/bin/rake -s db:setup RAILS_ENV=production
@@ -220,6 +217,9 @@ cd /var/mailserv/admin && /usr/local/bin/rake -s db:migrate RAILS_ENV=production
 /usr/local/bin/mysql mail < /var/mailserv/install/templates/sql/mail.sql
 /usr/local/bin/mysql < /var/mailserv/install/templates/sql/spamcontrol.sql
 /usr/local/bin/ruby /var/mailserv/scripts/rrdmon_create.rb
+
+echo " -- Step 21 - setup awstats"
+/var/mailserv/scripts/install_awstats
 }
 
 function SetAdmin {
