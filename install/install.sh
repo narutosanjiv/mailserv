@@ -59,7 +59,6 @@ ln -sf /etc/php-5.5.sample/pspell.ini /etc/php-5.5/pspell.ini
 ln -sf /etc/php-5.5.sample/zip.ini /etc/php-5.5/zip.ini
 ln -fs /etc/php-5.5.sample/xcache.ini /etc/php-5.5/xcache.ini
 ln -sf /usr/local/bin/php-5.5 /usr/local/bin/php
-install -m 644 $TEMPLATES/php-fpm.conf /etc/
 /usr/sbin/rcctl enable php_fpm
 /usr/sbin/rcctl start php_fpm
 
