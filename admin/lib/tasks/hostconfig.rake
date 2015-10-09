@@ -13,9 +13,9 @@ namespace :system do
   desc "Reload services"
   task :reload do
     exec("
-      /usr/local/sbin/nginx -s reload    > /dev/null &&
-      /usr/local/bin/god restart dovecot > /dev/null &&
-      /usr/local/bin/god restart postfix > /dev/null &
+      /usr/sbin/rcctl reload nginx > /dev/null &&
+      /usr/sbin/rcctl reload dovecot > /dev/null &&
+      /usr/sbin/rcctl reload postfix > /dev/null &
     ")
   end
 
@@ -67,7 +67,7 @@ namespace :system do
   end
 
   def selfsigned?
-    text = %x{/usr/sbin/openssl x509 -text -noout -in /etc/ssl/server.crt}.strip
+    text = %x{/usr/bin/openssl x509 -text -noout -in /etc/ssl/server.crt}.strip
     issuer  = text.match(/Issuer.*CN=(.*)[,\n]/)[1]
     subject = text.match(/Subject:.*CN=(.*)[,\n]/)[1]
     issuer == subject
@@ -78,9 +78,9 @@ namespace :system do
     if selfsigned?
       tf = Tempfile.new("_csr")
       %x{
-        /usr/sbin/openssl genrsa -out /etc/ssl/private/server.key 2048 2>/dev/null
-        /usr/sbin/openssl req -new -key /etc/ssl/private/server.key -out #{tf.path} -subj "/CN=#{@hostname} -sha1" 2>/dev/null
-        /usr/sbin/openssl x509 -req -days 1095 -in #{tf.path} -signkey /etc/ssl/private/server.key -out /etc/ssl/server.crt 2>/dev/null
+        /usr/bin/openssl genrsa -out /etc/ssl/private/server.key 2048 2>/dev/null
+        /usr/bin/openssl req -new -key /etc/ssl/private/server.key -out #{tf.path} -subj "/CN=#{@hostname} -sha1" 2>/dev/null
+        /usr/bin/openssl x509 -req -days 1095 -in #{tf.path} -signkey /etc/ssl/private/server.key -out /etc/ssl/server.crt 2>/dev/null
       }
     end
   end
