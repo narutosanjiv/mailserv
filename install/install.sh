@@ -23,7 +23,7 @@ pkg_add lynx ImageMagick mariadb-server gtar-1.28p0 gsed clamav postfix-2.11.4-m
     p5-Mail-SpamAssassin dovecot-mysql dovecot-pigeonhole sqlgrey nginx-1.7.10 php-5.5.22 \
     php-mysql-5.5.22 php-pdo_mysql-5.5.22 php-fpm-5.5.22 php-zip-5.5.22 php-mcrypt-5.5.22 \
     php-intl-5.5.22 php-pspell-5.5.22 ruby-rrd-1.4.9 ruby21-highline-1.6.21 ruby21-mysql-2.9.1 \
-    node god xcache
+    god xcache
 
 echo " -- Step 2 - link python"
 ln -sf /usr/local/bin/python2.7 /usr/local/bin/python
@@ -65,10 +65,7 @@ ln -sf /usr/local/bin/php-5.5 /usr/local/bin/php
 echo " -- Step 7 - setup postfix"
 /usr/local/sbin/postfix-enable
 
-install -m 644 $TEMPLATES/postfix/main.cf /etc/postfix
-install -m 644 $TEMPLATES/postfix/master.cf /etc/postfix
-install -m 644 $TEMPLATES/postfix/header_checks.pcre /etc/postfix
-install -m 644 $TEMPLATES/postfix/milter_header_checks /etc/postfix
+install -m 644 $TEMPLATES/postfix/* /etc/postfix
 cp -r $TEMPLATES/postfix/sql /etc/postfix/
 chmod -R 755 /etc/postfix/sql
 
@@ -84,8 +81,7 @@ install -m 644 $TEMPLATES/spamassassin_local.cf /etc/mail/spamassassin/local.cf
 /usr/local/bin/sa-update -v
 
 echo " --Step 9 - setup clamav"
-install -m 644 $TEMPLATES/clam* /etc
-install -m 644 $TEMPLATES/freshclam.conf /etc
+install -m 644 $TEMPLATES/*clam* /etc
 
 if [ ! -f /var/db/clamav/main.cld ]; then
 touch /var/log/clamd.log 2> /dev/null
