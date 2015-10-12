@@ -1,5 +1,5 @@
 #!/bin/sh
-# Last changes : 2015/10/5, Wesley MOUEDINE ASSABY
+# Last changes : 2015/10/12, Wesley MOUEDINE ASSABY
 # Contact me at  wesley at mouedine dot net
 # The RubyOnRails app (web admin) : under active development by joshsoftware - www.joshsoftware.com
 
@@ -67,8 +67,8 @@ ln -sf /usr/local/bin/php-5.5 /usr/local/bin/php
 echo " -- Step 7 - setup postfix"
 /usr/local/sbin/postfix-enable
 mkdir -p /etc/postfix/sql
-install -m 644 $TEMPLATES/postfix/sql/* /etc/postfix/sql/ 2> /dev/null
-install -m 644 $TEMPLATES/postfix/* /etc/postfix 2> /dev/null
+install -m 644 $TEMPLATES/postfix/sql/* /etc/postfix/sql/
+install -m 644 $TEMPLATES/postfix/* /etc/postfix
 /usr/sbin/rcctl enable postfix
 /usr/sbin/rcctl start postfix
 
@@ -146,7 +146,7 @@ chmod 644 /var/log/messages_webmin.log
 
 echo " -- Step 14 - setup packet filter"
 touch /etc/badhosts 2> /dev/null
-install -m 644 $TEMPLATES/pf.conf /etc 2> /dev/null
+install -m 644 $TEMPLATES/pf.conf /etc
 /sbin/pfctl -f /etc/pf.conf
 
 echo " -- Step 15 - setup ruby"
