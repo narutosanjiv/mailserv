@@ -19,7 +19,7 @@ install $TEMPLATES/fs/sbin/* /usr/local/sbin/
 install $TEMPLATES/fs/mailserv/* /usr/local/share/mailserv
 
 echo " -- Step 1 - install packages"
-pkg_add lynx ImageMagick mariadb-server gtar-1.28p0 gsed clamav postfix-2.11.4-mysql \
+pkg_add lynx ImageMagick mariadb-server gtar-1.28p0 clamav postfix-2.11.4-mysql \
     p5-Mail-SpamAssassin dovecot-mysql dovecot-pigeonhole sqlgrey nginx-1.7.10 php-5.5.22 \
     php-mysql-5.5.22 php-pdo_mysql-5.5.22 php-fpm-5.5.22 php-zip-5.5.22 php-mcrypt-5.5.22 \
     php-intl-5.5.22 php-pspell-5.5.22 ruby-rrd-1.4.9 ruby21-highline-1.6.21 ruby21-mysql-2.9.1 \
@@ -45,8 +45,10 @@ echo " -- Step 4 - enable and start ntpd"
 
 echo " -- Step 5 - setup Mariadb-Server"
 /usr/local/bin/mysql_install_db > /dev/null 2>&1
-install -m 644 $TEMPLATES/my.cnf /etc
-
+mv /etc/my.cnf /etc/examples/
+sed '/\[mysqld\]/ a\
+    bind-address    = 127.0.0.1
+    ' /etc/examples/my.cnf > /etc/my.cnf
 /usr/sbin/rcctl enable mysqld
 /usr/sbin/rcctl start mysqld
 
