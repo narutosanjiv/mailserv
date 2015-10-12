@@ -66,24 +66,20 @@ ln -sf /usr/local/bin/php-5.5 /usr/local/bin/php
 
 echo " -- Step 7 - setup postfix"
 /usr/local/sbin/postfix-enable
-
-install -m 644 $TEMPLATES/postfix/* /etc/postfix
-cp -r $TEMPLATES/postfix/sql /etc/postfix/
-chmod -R 755 /etc/postfix/sql
-
+mkdir -p /etc/postfix/sql
+install -m 644 $TEMPLATES/postfix/sql/* /etc/postfix/sql/ 2> /dev/null
+install -m 644 $TEMPLATES/postfix/* /etc/postfix 2> /dev/null
 /usr/sbin/rcctl enable postfix
 /usr/sbin/rcctl start postfix
 
 echo " -- Step 8 - setup spamassassin"
 install -m 644 $TEMPLATES/spamassassin_local.cf /etc/mail/spamassassin/local.cf
-
 /usr/sbin/rcctl enable spamassassin
 /usr/sbin/rcctl start spamassassin
-
 /usr/local/bin/sa-update -v
 
 echo " --Step 9 - setup clamav"
-install -m 644 $TEMPLATES/*clam* /etc
+install -m 644 $TEMPLATES/*clam* /etc 2> /dev/null
 
 if [ ! -f /var/db/clamav/main.cld ]; then
 touch /var/log/clamd.log 2> /dev/null
@@ -101,6 +97,8 @@ fi
 /usr/sbin/rcctl enable freshclam
 /usr/sbin/rcctl start freshclam
 /usr/sbin/rcctl start clamd
+/usr/sbin/rcctl enable clamav_milter
+/usr/sbin/rcctl start clamav_milter
 
 echo " -- Step 10 - create certificates"
 /usr/bin/openssl genrsa -out /etc/ssl/private/server.key 2048 2>/dev/null
@@ -113,7 +111,9 @@ rm -f /tmp/server.csr
 echo " -- Step 11 - setup dovecot"
 install -m 644 $TEMPLATES/dovecot.conf /etc/dovecot
 install -m 644 $TEMPLATES/dovecot-sql.conf /etc/dovecot
-
+touch /var/log/imap 2> /dev/null
+chgrp _dovecot /usr/local/libexec/dovecot/dovecot-lda
+chmod 4750 /usr/local/libexec/dovecot/dovecot-lda
 /usr/sbin/rcctl enable dovecot
 /usr/sbin/rcctl start dovecot
 
@@ -136,10 +136,6 @@ cd /var/mailserv/admin/public && chown _mailserv:_mailserv javascripts styleshee
 cd /var/mailserv/account && chown -R _mailserv:_mailserv log public tmp
 cd /var/mailserv/account/public && chown _mailserv:_mailserv javascripts stylesheets
 
-touch /var/log/imap 2> /dev/null
-chgrp _dovecot /usr/local/libexec/dovecot/dovecot-lda
-chmod 4750 /usr/local/libexec/dovecot/dovecot-lda
-
 touch /var/log/imap_webmin 2> /dev/null
 touch /var/log/maillog_webmin 2> /dev/null
 touch /var/log/messages_webmin.log 2> /dev/null
@@ -150,7 +146,7 @@ chmod 644 /var/log/messages_webmin.log
 
 echo " -- Step 14 - setup packet filter"
 touch /etc/badhosts 2> /dev/null
-install -m 644 $TEMPLATES/pf.conf /etc
+install -m 644 $TEMPLATES/pf.conf /etc 2> /dev/null
 /sbin/pfctl -f /etc/pf.conf
 
 echo " -- Step 15 - setup ruby"
@@ -163,14 +159,9 @@ ln -sf /usr/local/bin/rake21 /usr/local/bin/rake
 ln -sf /usr/local/bin/gem21 /usr/local/bin/gem
 ln -sf /usr/local/bin/testrb21 /usr/local/bin/testrb
 
-/usr/local/bin/gem install rails -V
-ln -sf /usr/local/bin/rails21 /usr/local/bin/rails
-
-/usr/local/bin/gem install bundler -V
+/usr/local/bin/gem install bundler
 ln -sf /usr/local/bin/bundle21 /usr/local/bin/bundle
 ln -sf /usr/local/bin/bundler21 /usr/local/bin/bundler
-
-/usr/local/bin/gem install fastercsv -V
 
 echo " -- Step 16 - setup god"
 mkdir -p /etc/god
@@ -182,9 +173,7 @@ install -m 644 $TEMPLATES/login.conf /etc
 install -m 644 $TEMPLATES/rrdmon.conf /etc
 install -m 644 $TEMPLATES/daily.local /etc
 install -m 600 $TEMPLATES/crontab_root /var/cron/tabs/root
-
 /usr/local/bin/ruby -pi -e '$_.gsub!(/\/var\/spool\/mqueue/, "Mail queue")' /etc/daily
-
 echo "root: |/usr/local/share/mailserv/sysmail.rb" >> /etc/mail/aliases
 /usr/bin/newaliases >/dev/null 2>&1
 
@@ -201,22 +190,25 @@ install -m 644 $TEMPLATES/nginx.conf /etc/nginx/
 /usr/sbin/rcctl set nginx flags -u
 /usr/sbin/rcctl start nginx
 
+echo " -- Step 20 - rake task"
+/usr/local/bin/rake -s -f /var/mailserv/admin/Rakefile system:update_hostname RAILS_ENV=production
+
+echo " -- Step 21 - setup awstats"
+/var/mailserv/scripts/install_awstats
+
+echo " -- Step 22 - create databases"
+/usr/local/bin/mysql -e "grant select on mail.* to 'postfix'@'localhost' identified by 'postfix';"
+/usr/local/bin/mysql -e "grant all privileges on mail.* to 'mailadmin'@'localhost' identified by 'mailadmin';"
 ################################ active development ################################
 exit 0
 
-/usr/local/bin/rake -s -f /var/mailserv/admin/Rakefile system:update_hostname RAILS_ENV=production
-
-echo " -- Step 20 - create databases"
-/usr/local/bin/mysql -e "grant select on mail.* to 'postfix'@'localhost' identified by 'postfix';"
-/usr/local/bin/mysql -e "grant all privileges on mail.* to 'mailadmin'@'localhost' identified by 'mailadmin';"
 cd /var/mailserv/admin && /usr/local/bin/rake -s db:setup RAILS_ENV=production
 cd /var/mailserv/admin && /usr/local/bin/rake -s db:migrate RAILS_ENV=production
 /usr/local/bin/mysql mail < /var/mailserv/install/templates/sql/mail.sql
 /usr/local/bin/mysql < /var/mailserv/install/templates/sql/spamcontrol.sql
 /usr/local/bin/ruby /var/mailserv/scripts/rrdmon_create.rb
 
-echo " -- Step 21 - setup awstats"
-/var/mailserv/scripts/install_awstats
+
 }
 
 function SetAdmin {
