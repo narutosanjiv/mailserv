@@ -1,4 +1,4 @@
-# Mailserv for the last OpenBSD release - under active development
+# Mailserv for OpenBSD 5.7 - under active development
 
 To install (from a fresh OpenBSD 5.7) :
 
