@@ -1,0 +1,25 @@
+.top-content
+  .inner-bg
+    .container
+      .row
+        .col-sm-6.col-sm-offset-3.form-box
+          - flash.each do |key, value|
+            %div{class: flash_class(key)}
+              = value
+          .form-top
+            .form-top-left
+              %h3 Login to our site
+              %p Enter your username and password to log on:
+            .form-top-right
+              %i.fa.fa-lock
+          .form-bottom
+            =form_for(@admin, as: :super_admin, url: sessions_create_path, html:{role: 'form'}) do|f|
+              .form-group
+                %label.sr-only{:for => "form-username"} Username
+                = f.text_field :username, class: 'form-username form-control', placeholder: 'username'
+
+              .form-group
+                %label.sr-only{:for => "form-password"} Password
+                = f.password_field :password, class: 'form-password form-control', placeholder: 'password'
+
+              %button.btn{:type => "submit"} Sign in!
