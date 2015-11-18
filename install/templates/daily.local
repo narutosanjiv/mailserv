@@ -2,13 +2,11 @@
 
 # Update spamassassin with official updates and
 # level 0 rules from www.rulesemporium.com
-/usr/local/bin/sa-update --nogpg \
-  --channel saupdates.openprotect.com \
-  --channel updates.spamassassin.org &&
-/usr/local/bin/god restart spamd >/dev/null 2>&1
+/usr/local/bin/sa-update
+/usr/sbin/rcctl restart spamassassin
 
 # Delete old Spams and Trash messages after 30 days
 /usr/local/share/mailserv/clean_spam.rb 30 >/dev/null 2>&1
 
 # Restart ruby-god (avoiding potential memory leaks)
-/usr/local/bin/god quit >/dev/null; sleep 2; /usr/local/bin/god -c /etc/god/god.conf >/dev/null 2>&1
+# /usr/local/bin/god quit >/dev/null; sleep 2; /usr/local/bin/god -c /etc/god/god.conf >/dev/null 2>&1
