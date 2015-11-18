@@ -13,7 +13,7 @@
             .form-top-right
               %i.fa.fa-lock
           .form-bottom
-            =form_for(@admin, as: :super_admin, url: sessions_create_path, html:{role: 'form'}) do|f|
+            =form_for(@admin, as: :super_admin, url: session_path, html:{role: 'form'}) do|f|
               .form-group
                 %label.sr-only{:for => "form-username"} Username
                 = f.text_field :username, class: 'form-username form-control', placeholder: 'username'

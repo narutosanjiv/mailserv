@@ -1,0 +1,15 @@
+%ul.nav.navbar-top-links.navbar-right
+  %li.dropdown
+    %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+      %i.fa.fa-user.fa-fw
+      %i.fa.fa-caret-down
+    %ul.dropdown-menu.dropdown-user
+      %li
+        %a{:href => "#"}
+          %i.fa.fa-user.fa-fw
+          User Profile
+      %li.divider
+      %li
+        = link_to session_path, method: :delete do
+          %i.fa.fa-sign-out.fa-fw
+          Logout
