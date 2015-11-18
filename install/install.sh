@@ -1,11 +1,11 @@
 #!/bin/sh
-# Last changes : 2015/10/12, Wesley MOUEDINE ASSABY
-# Contact me at  wesley at mouedine dot net
+# Last changes : 2015/11/18, Wesley MOUEDINE ASSABY
+# Contact me at  milo974 at gmail dot com
 # The RubyOnRails app (web admin) : under active development by joshsoftware - www.joshsoftware.com
 
 TEMPLATES=/var/mailserv/install/templates
 
-export PKG_PATH=http://ftp2.fr.openbsd.org/pub/OpenBSD/5.7/packages/$(machine)/
+export PKG_PATH=http://ftp2.fr.openbsd.org/pub/OpenBSD/5.8/packages/$(machine)/
 
 function DoTheJob {
 
@@ -19,11 +19,11 @@ install $TEMPLATES/fs/sbin/* /usr/local/sbin/
 install $TEMPLATES/fs/mailserv/* /usr/local/share/mailserv
 
 echo " -- Step 1 - install packages"
-pkg_add lynx ImageMagick mariadb-server gtar-1.28p0 clamav postfix-2.11.4-mysql \
-    p5-Mail-SpamAssassin dovecot-mysql dovecot-pigeonhole sqlgrey nginx-1.7.10 php-5.5.22 \
-    php-mysql-5.5.22 php-pdo_mysql-5.5.22 php-fpm-5.5.22 php-zip-5.5.22 php-mcrypt-5.5.22 \
-    php-intl-5.5.22 php-pspell-5.5.22 ruby-rrd-1.4.9 ruby21-highline-1.6.21 ruby21-mysql-2.9.1 \
-    god xcache
+
+pkg_add awstats roundcubemail ImageMagick mariadb-server php-mysql-5.6.11 php-pdo_mysql-5.6.11 php-fpm-5.6.11p0 \
+    php-intl-5.6.11 xcache gtar-1.28p1 clamav postfix-3.0.2-mysql p5-Mail-SpamAssassin nginx-1.9.3p3 \
+    dovecot-mysql dovecot-pigeonhole sqlgrey ruby-2.2.2p0 sudo-1.8.14.3
+
 
 echo " -- Step 2 - link python"
 ln -sf /usr/local/bin/python2.7 /usr/local/bin/python
@@ -31,17 +31,16 @@ ln -sf /usr/local/bin/python2.7-2to3 /usr/local/bin/2to3
 ln -sf /usr/local/bin/python2.7-config /usr/local/bin/python-config
 ln -sf /usr/local/bin/pydoc2.7  /usr/local/bin/pydoc
 
+
 echo " -- Step 3 - stop and disable unwanted services"
 /usr/sbin/rcctl stop smtpd
 /usr/sbin/rcctl disable smtpd
 /usr/sbin/rcctl stop sndiod
 /usr/sbin/rcctl disable sndiod
 
-echo " -- Step 4 - enable and start ntpd"
-/usr/sbin/rcctl enable ntpd
+echo " -- Step 4 - set ntpd"
 /usr/sbin/rcctl set ntpd flags -s
-/usr/bin/install -m 644 /etc/examples/ntpd.conf /etc
-/usr/sbin/rcctl start ntpd
+/usr/sbin/rcctl restart ntpd
 
 echo " -- Step 5 - setup Mariadb-Server"
 /usr/local/bin/mysql_install_db > /dev/null 2>&1
@@ -53,14 +52,14 @@ sed '/\[mysqld\]/ a\
 /usr/sbin/rcctl start mysqld
 
 echo " -- Step 6 - setup php"
-ln -sf /etc/php-5.5.sample/intl.ini /etc/php-5.5/intl.ini
-ln -sf /etc/php-5.5.sample/mcrypt.ini /etc/php-5.5/mcrypt.ini
-ln -sf /etc/php-5.5.sample/mysql.ini /etc/php-5.5/mysql.ini
-ln -sf /etc/php-5.5.sample/pdo_mysql.ini /etc/php-5.5/pdo_mysql.ini
-ln -sf /etc/php-5.5.sample/pspell.ini /etc/php-5.5/pspell.ini
-ln -sf /etc/php-5.5.sample/zip.ini /etc/php-5.5/zip.ini
-ln -fs /etc/php-5.5.sample/xcache.ini /etc/php-5.5/xcache.ini
-ln -sf /usr/local/bin/php-5.5 /usr/local/bin/php
+ln -sf /etc/php-5.6.sample/intl.ini /etc/php-5.6/intl.ini
+ln -sf /etc/php-5.6.sample/mcrypt.ini /etc/php-5.6/mcrypt.ini
+ln -sf /etc/php-5.6.sample/mysql.ini /etc/php-5.6/mysql.ini
+ln -sf /etc/php-5.6.sample/pdo_mysql.ini /etc/php-5.6/pdo_mysql.ini
+ln -sf /etc/php-5.6.sample/pspell.ini /etc/php-5.6/pspell.ini
+ln -sf /etc/php-5.6.sample/zip.ini /etc/php-5.6/zip.ini
+ln -fs /etc/php-5.6.sample/xcache.ini /etc/php-5.6/xcache.ini
+ln -sf /usr/local/bin/php-5.6 /usr/local/bin/php
 install -m 644 $TEMPLATES/php-fpm.conf /etc
 /usr/sbin/rcctl enable php_fpm
 /usr/sbin/rcctl start php_fpm
@@ -94,11 +93,11 @@ chown -R _clamav:_clamav /var/db/clamav
 /usr/local/bin/freshclam --no-warnings
 fi
 
-/usr/sbin/rcctl enable clamd
 /usr/sbin/rcctl enable freshclam
+/usr/sbin/rcctl enable clamd
+/usr/sbin/rcctl enable clamav_milter
 /usr/sbin/rcctl start freshclam
 /usr/sbin/rcctl start clamd
-/usr/sbin/rcctl enable clamav_milter
 /usr/sbin/rcctl start clamav_milter
 
 echo " -- Step 10 - create certificates"
@@ -151,69 +150,60 @@ install -m 644 $TEMPLATES/pf.conf /etc
 /sbin/pfctl -f /etc/pf.conf
 
 echo " -- Step 15 - setup ruby"
-ln -sf /usr/local/bin/ruby21 /usr/local/bin/ruby
-ln -sf /usr/local/bin/erb21 /usr/local/bin/erb
-ln -sf /usr/local/bin/irb21 /usr/local/bin/irb
-ln -sf /usr/local/bin/rdoc21 /usr/local/bin/rdoc
-ln -sf /usr/local/bin/ri21 /usr/local/bin/ri
-ln -sf /usr/local/bin/rake21 /usr/local/bin/rake
-ln -sf /usr/local/bin/gem21 /usr/local/bin/gem
-ln -sf /usr/local/bin/testrb21 /usr/local/bin/testrb
+ln -sf /usr/local/bin/ruby22 /usr/local/bin/ruby
+ln -sf /usr/local/bin/erb22 /usr/local/bin/erb
+ln -sf /usr/local/bin/irb22 /usr/local/bin/irb
+ln -sf /usr/local/bin/rdoc22 /usr/local/bin/rdoc
+ln -sf /usr/local/bin/ri22 /usr/local/bin/ri
+ln -sf /usr/local/bin/rake22 /usr/local/bin/rake
+ln -sf /usr/local/bin/gem22 /usr/local/bin/gem
 
 /usr/local/bin/gem install bundler
-ln -sf /usr/local/bin/bundle21 /usr/local/bin/bundle
-ln -sf /usr/local/bin/bundler21 /usr/local/bin/bundler
+ln -sf /usr/local/bin/bundle22 /usr/local/bin/bundle
+ln -sf /usr/local/bin/bundler22 /usr/local/bin/bundler
 
-echo " -- Step 16 - setup god"
-mkdir -p /etc/god
-install -m 644 $TEMPLATES/fs/god/* /etc/god
-
-echo " -- Step 17 - tune system"
+echo " -- Step 16 - tune system"
 install -m 644 $TEMPLATES/*syslog.conf /etc
 install -m 644 $TEMPLATES/login.conf /etc
-install -m 644 $TEMPLATES/rrdmon.conf /etc
 install -m 644 $TEMPLATES/daily.local /etc
-install -m 600 $TEMPLATES/crontab_root /var/cron/tabs/root
+# install -m 600 $TEMPLATES/crontab_root /var/cron/tabs/root
 /usr/local/bin/ruby -pi -e '$_.gsub!(/\/var\/spool\/mqueue/, "Mail queue")' /etc/daily
 echo "root: |/usr/local/share/mailserv/sysmail.rb" >> /etc/mail/aliases
 /usr/bin/newaliases >/dev/null 2>&1
 
-echo " -- Step 18 - setup roundcube"
-/var/mailserv/scripts/install_roundcube
+echo " -- Step 17 - setup roundcube"
 /usr/local/bin/mysqladmin create webmail
-/usr/local/bin/mysql webmail < /var/www/webmail/webmail/SQL/mysql.initial.sql
+/usr/local/bin/mysql webmail < /var/www/roundcubemail/SQL/mysql.initial.sql
 /usr/local/bin/mysql webmail -e "grant all privileges on webmail.* to 'webmail'@'localhost' identified by 'webmail'"
-cp /var/mailserv/admin/public/favicon.ico /var/www/webmail/webmail/
+cp /var/mailserv/admin/public/favicon.ico /var/www/roundcubemail
 
-echo " -- Step 19 - setup nginx"
+echo " -- Step 18 - setup nginx"
 install -m 644 $TEMPLATES/nginx.conf /etc/nginx/
 /usr/sbin/rcctl enable nginx
 /usr/sbin/rcctl set nginx flags -u
 /usr/sbin/rcctl start nginx
 
-echo " -- Step 20 - rake task"
-/usr/local/bin/rake -s -f /var/mailserv/admin/Rakefile system:update_hostname RAILS_ENV=production
+#echo " -- Step 19 - rake task"
+#/usr/local/bin/rake -s -f /var/mailserv/admin/Rakefile system:update_hostname RAILS_ENV=production
 
-echo " -- Step 21 - setup awstats"
-/var/mailserv/scripts/install_awstats
+#echo " -- Step 20 - setup awstats"
+#/var/mailserv/scripts/install_awstats
 
-echo " -- Step 22 - create databases"
+echo " -- Step 19 - create databases"
 /usr/local/bin/mysql -e "grant select on mail.* to 'postfix'@'localhost' identified by 'postfix';"
 /usr/local/bin/mysql -e "grant all privileges on mail.* to 'mailadmin'@'localhost' identified by 'mailadmin';"
-################################ active development ################################
-exit 0
 
-cd /var/mailserv/admin && /usr/local/bin/rake -s db:setup RAILS_ENV=production
-cd /var/mailserv/admin && /usr/local/bin/rake -s db:migrate RAILS_ENV=production
-/usr/local/bin/mysql mail < /var/mailserv/install/templates/sql/mail.sql
-/usr/local/bin/mysql < /var/mailserv/install/templates/sql/spamcontrol.sql
-/usr/local/bin/ruby /var/mailserv/scripts/rrdmon_create.rb
+# cd /var/mailserv/admin && /usr/local/bin/rake -s db:setup RAILS_ENV=production
+# cd /var/mailserv/admin && /usr/local/bin/rake -s db:migrate RAILS_ENV=production
+# /usr/local/bin/mysql mail < /var/mailserv/install/templates/sql/mail.sql
+# /usr/local/bin/mysql < /var/mailserv/install/templates/sql/spamcontrol.sql
+# /usr/local/bin/ruby /var/mailserv/scripts/rrdmon_create.rb
 
 
 }
 
 function SetAdmin {
-rake -s -f /var/mailserv/admin/Rakefile  mailserv:add_admin
+# rake -s -f /var/mailserv/admin/Rakefile  mailserv:add_admin
 }
 
 DoTheJob
