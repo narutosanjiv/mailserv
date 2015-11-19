@@ -177,6 +177,7 @@ echo " -- Step 17 - setup roundcube"
 /usr/local/bin/mysql webmail < /var/www/roundcubemail/SQL/mysql.initial.sql
 /usr/local/bin/mysql webmail -e "grant all privileges on webmail.* to 'webmail'@'localhost' identified by 'webmail'"
 cp /var/mailserv/admin/public/favicon.ico /var/www/roundcubemail
+(cd /var/www/roundcubemail;ftp http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types && chown www.www mime.types)
 
 echo " -- Step 18 - setup nginx"
 install -m 644 $TEMPLATES/nginx.conf /etc/nginx/
