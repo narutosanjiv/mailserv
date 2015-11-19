@@ -1,0 +1,16 @@
+/admin/.bundle
+
+# Ignore all logfiles and tempfiles.
+/admin/log/*
+*.swp
+!/log/.keep
+/admin/tmp
+/coverage
+.DS_Store
+dump.rdb
+
+# Ignore configuration files
+.env
+env_vars
+Procfile
+
