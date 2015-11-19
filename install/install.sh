@@ -1,5 +1,5 @@
 #!/bin/sh
-# Last changes : 2015/11/18, Wesley MOUEDINE ASSABY
+# Last changes : 2015/11/19, Wesley MOUEDINE ASSABY
 # Contact me at  milo974 at gmail dot com
 # The RubyOnRails app (web admin) : under active development by joshsoftware - www.joshsoftware.com
 
@@ -176,7 +176,6 @@ echo " -- Step 17 - setup roundcube"
 /usr/local/bin/mysqladmin create webmail
 /usr/local/bin/mysql webmail < /var/www/roundcubemail/SQL/mysql.initial.sql
 /usr/local/bin/mysql webmail -e "grant all privileges on webmail.* to 'webmail'@'localhost' identified by 'webmail'"
-cp /var/mailserv/admin/public/favicon.ico /var/www/roundcubemail
 (cd /var/www/roundcubemail;ftp http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types && chown www.www mime.types)
 install -m 644 $TEMPLATES/roundcube/conf/config.inc.php /var/www/roundcubemail/config
 
