@@ -8,3 +8,5 @@ pkg_add git
 cd /var && git clone https://github.com/wesley974/mailserv.git
 sh ./mailserv/install/install.sh
 </pre>
+
+Compatible with any OpenBSD architectures (i386, amd64...)
