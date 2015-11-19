@@ -60,6 +60,7 @@ ln -sf /etc/php-5.6.sample/pspell.ini /etc/php-5.6/pspell.ini
 ln -sf /etc/php-5.6.sample/zip.ini /etc/php-5.6/zip.ini
 ln -fs /etc/php-5.6.sample/xcache.ini /etc/php-5.6/xcache.ini
 ln -sf /usr/local/bin/php-5.6 /usr/local/bin/php
+echo "allow_url_fopen = On" >> /etc/php-5.6.ini
 install -m 644 $TEMPLATES/php-fpm.conf /etc
 /usr/sbin/rcctl enable php_fpm
 /usr/sbin/rcctl start php_fpm
