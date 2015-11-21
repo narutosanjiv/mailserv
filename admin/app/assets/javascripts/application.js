@@ -13,4 +13,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-sprockets
-//= require_tree .
+//= require metisMenu.min
+//= require raphael-min
+//= require jquery.dataTables.min
+//= require dataTables.bootstrap.min
+//= require sb-admin-2
+//= require administrators

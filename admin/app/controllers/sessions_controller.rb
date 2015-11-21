@@ -4,14 +4,14 @@ class SessionsController < ApplicationController
   layout 'login'
 
   def new
-    @admin = SuperAdmin.new
+    @admin = Administrator.new
   end
 
   def create
     if login(session_params[:username], session_params[:password])
       redirect_back_or_to(:root, notice: 'Login successful')
     else
-      @admin = SuperAdmin.new(username: session_params[:username])
+      @admin = Administrator.new(username: session_params[:username])
       flash.now[:error] = 'Incorrect username/password.'
       render action: 'new'
     end
