@@ -1,3 +1,50 @@
 .row
   .col-lg-12
     %h1.page-header Dashboard
+    .container
+      / Nav tabs
+      %ul.nav.nav-tabs{:role => "tablist"}
+        %li.active
+          %a{"data-toggle" => "tab", :href => "#home", :role => "tab"}
+            %icon.fa.fa-home
+            CPU
+        %li
+          %a{"data-toggle" => "tab", :href => "#profile", :role => "tab"}
+            %i.fa.fa-user
+            Memory
+        %li
+          %a{"data-toggle" => "tab", :href => "#messages", :role => "tab"}
+            %i.fa.fa-envelope
+            Mail
+        %li
+          %a{"data-toggle" => "tab", :href => "#settings", :role => "tab"}
+            %i.fa.fa-cog
+            Swap
+      / Tab panes
+      .tab-content
+        #home.tab-pane.fade.active.in
+          %h2 Home Content Goes Here
+          %img{:alt => "CPU", :src => "/images/rrd/daily/cpu.png"}/
+        #profile.tab-pane.fade
+          %h2 Profile Content Goes Here
+          %img{:alt => "Memory", :src => "/images/rrd/daily/mem.png"}/
+        #messages.tab-pane.fade
+          %h2 Messages Content Goes Here
+          %img{:alt => "Mail", :src => "/images/rrd/daily/mail.png"}/
+        #settings.tab-pane.fade
+          %h2 Settings Content Goes Here
+          %img{:alt => "Swap", :src => "/images/rrd/daily/swap.png"}/
+
+    -#
+      / Post Info
+      %div{:style => "position:fixed;bottom:0;left:0;    \r\n            background:lightgray;width:100%;"}
+        About this SO Question:
+        %a{:href => "http://stackoverflow.com/q/24553105/1366033"} How to create Tabbed Panel in Bootstrap
+        %br/
+        Fork This Skeleton Here:
+        %a{:href => "http://jsfiddle.net/KyleMit/kcpma/"} Bootstrap 3.0 Skeleton
+        %br/
+        Styled after this (better) template:
+        %a{:href => "http://wrapbootstrap.com/preview/WB066F8J6"} Responsive Tabbed Form
+        %br/
+      %div
