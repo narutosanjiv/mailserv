@@ -1,0 +1,23 @@
+.modal-dialog{ role: :document }
+  .modal-content
+    .modal-header
+      %button.close{ type: :button, 'data-dismiss': :modal, 'aria-hidden': "true" } &times;
+      %h4.modal-title#adminModal Administrator modal
+    = form_for administrator, remote: true do |f|
+      .modal-body
+        %ul.form-errors
+        .form-group
+          = f.label :username
+          = f.text_field :username, class: 'form-control'
+        .form-group
+          = f.label :email
+          = f.text_field :email, class: 'form-control'
+        .form-group
+          = f.label :password
+          = f.password_field :password, class: 'form-control'
+        .form-group
+          = f.label :password_confirmation
+          = f.password_field :password_confirmation, class: 'form-control'
+      .modal-footer
+        %button.btn.btn-default{ 'data-dismiss': :modal } Close
+        = f.submit 'Submit', class: 'btn btn-primary'
