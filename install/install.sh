@@ -22,7 +22,7 @@ echo " -- Step 1 - install packages"
 
 pkg_add awstats roundcubemail ImageMagick mariadb-server php-mysql-5.6.11 php-pdo_mysql-5.6.11 php-fpm-5.6.11p0 \
     php-intl-5.6.11 xcache gtar-1.28p1 clamav postfix-3.0.2-mysql p5-Mail-SpamAssassin nginx-1.9.3p3 \
-    dovecot-mysql dovecot-pigeonhole sqlgrey ruby-2.2.2p0 sudo-1.8.14.3 p5-libwww rrdtool
+    dovecot-mysql dovecot-pigeonhole sqlgrey ruby-2.2.2p0 sudo-1.8.14.3 p5-libwww
 
 
 echo " -- Step 2 - link python"
