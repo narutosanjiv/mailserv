@@ -1,5 +1,5 @@
 #!/bin/sh
-# Last changes : 2015/11/22, Wesley MOUEDINE ASSABY
+# Last changes : 2015/11/23, Wesley MOUEDINE ASSABY
 # Contact me at  milo974 at gmail dot com
 # The RubyOnRails app (web admin) : under active development by joshsoftware - www.joshsoftware.com
 
