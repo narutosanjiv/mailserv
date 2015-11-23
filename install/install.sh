@@ -193,9 +193,6 @@ echo " -- Step 19 - create databases"
 /usr/local/bin/mysql -e "grant select on mail.* to 'postfix'@'localhost' identified by 'postfix';"
 /usr/local/bin/mysql -e "grant all privileges on mail.* to 'mailadmin'@'localhost' identified by 'mailadmin';"
 
-#echo " -- Step 20 - setup awstats"
-#/var/mailserv/scripts/install_awstats
-
 }
 
 function SetAdmin {
