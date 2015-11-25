@@ -1,0 +1,39 @@
+.row
+  .col-lg-12.page-header
+    .row
+      .col-md-4
+        %h1 Administrators
+      .col-md-4.col-md-offset-4
+        .pull-right
+          %h1
+            = link_to 'Add Administrator', '#', id: 'administrator_new', class: 'btn btn-primary btn-lg', data: { toggle: :modal, 'data-target': '#addAdmin' }
+
+.modal.fade#addAdmin{ tabindex: '-1', role: :dialog, 'aria-labelledby': :adminModal, 'aria-hidden': "true" }
+  = render partial: 'administrator_modal', locals: { administrator: @administrator }
+
+.row
+  .col-lg-12
+    .panle.panel-default
+      .panle-body
+        .dataTable_wrapper
+          %table.table.table-striped.table-bordered.table-hover#dataTable-Administrator
+            %thead
+              %tr
+                %th Username
+                %th Email
+                %th Actions
+            %tbody
+              - @administrators.each do |administrator|
+                %tr
+                  %td= administrator.username
+                  %td= administrator.email
+                  %td
+                    .row
+                      .col-md-3
+                        = link_to '#', class: 'administrator_edit', data: { attributes: administrator.json_presentation } do
+                          %span.glyphicon.glyphicon-edit
+                          Edit
+                      .col-md-3
+                        = link_to administrator_path(administrator), method: :delete, data: { confirm: 'Are you sure ?' } do
+                          %span.glyphicon.glyphicon-trash
+                          Delete

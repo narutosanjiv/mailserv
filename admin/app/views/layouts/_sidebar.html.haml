@@ -7,8 +7,17 @@
           %span.input-group-btn
             %button.btn.btn-default{:type => "button"}
               %i.fa.fa-search
-        / /input-group
+
       %li
         = link_to root_path do
           %i.fa.fa-dashboard.fa-fw
           Dashboard
+
+      %li
+        = link_to '#' do
+          %i.fa.fa-wrench.fa-fw
+          System
+          %span.fa.arrow
+        %ul.nav.nav-second-level
+          %li
+            = link_to 'Administrators', administrators_path

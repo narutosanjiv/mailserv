@@ -10,5 +10,9 @@ class Administrator
 
   validates :username, presence: true, uniqueness: true
   validates :email, format: { with: /\A[^@\s]+@([^@\s]+\.)+[^@\W]+\z/ }, allow_blank: true
-  validates :password, presence: true, confirmation: true, on: :create
+  validates :password, presence: true, confirmation: true, length: { minimum: 6 }, on: :create
+
+  def json_presentation
+    as_json(only: [:_id, :email, :username])
+  end
 end
