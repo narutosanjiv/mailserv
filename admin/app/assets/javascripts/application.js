@@ -19,3 +19,4 @@
 //= require dataTables.bootstrap.min
 //= require sb-admin-2
 //= require administrators
+//= require dashboard
