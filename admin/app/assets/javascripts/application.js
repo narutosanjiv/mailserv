@@ -20,3 +20,4 @@
 //= require sb-admin-2
 //= require administrators
 //= require dashboard
+//= require domains

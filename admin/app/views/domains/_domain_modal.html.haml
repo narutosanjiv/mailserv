@@ -14,7 +14,7 @@
           = f.text_field :allowed_quota, class: 'form-control'
         .form-group
           = f.label :max_quota
-          = f.password_field :max_allowed_quota, class: 'form-control'
+          = f.text_field :max_allowed_quota, class: 'form-control'
       .modal-footer
         %button.btn.btn-default{ 'data-dismiss': :modal } Close
         = f.submit 'Submit', class: 'btn btn-primary'

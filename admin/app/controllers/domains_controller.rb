@@ -7,7 +7,7 @@ class DomainsController < ApplicationController
   end
 
   def create
-    flash[:notice] = 'Domain successfully created.' if @administrator.save
+    flash[:notice] = 'Domain successfully created.' if @domain.save
 
     respond_to do |format|
       format.js { render 'domains/upsert' }
@@ -15,7 +15,7 @@ class DomainsController < ApplicationController
   end
 
   def update
-    flash[:notice] = 'Domain successfully updated.' if @administrator.update(administrator_params)
+    flash[:notice] = 'Domain successfully updated.' if @domain.update(domain_params)
 
     respond_to do |format|
       format.js { render 'domains/upsert' }
@@ -24,7 +24,7 @@ class DomainsController < ApplicationController
 
   def destroy
     @domain.destroy
-    redirect_to domains_path, notice: 'Administrator deleted successfully.'
+    redirect_to domains_path, notice: 'Domain deleted successfully.'
   end
 
   private

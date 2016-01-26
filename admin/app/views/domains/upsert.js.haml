@@ -1,4 +1,4 @@
 - if @domain.valid?
   location.reload()
 - else
-  $('ul.form-errors').html(#{raw @administrator.errors.full_messages.map{ |error| "<li class='text-danger'>#{error}</li>" } })
+  $('ul.form-errors').html(#{raw @domain.errors.full_messages.map{ |error| "<li class='text-danger'>#{error}</li>" } })

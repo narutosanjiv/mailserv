@@ -16,7 +16,7 @@
     .panle.panel-default
       .panle-body
         .dataTable_wrapper
-          %table.table.table-striped.table-bordered.table-hover#dataTable-Administrator
+          %table.table.table-striped.table-bordered.table-hover#dataTable-Domain
             %thead
               %tr
                 %th Name
@@ -36,6 +36,6 @@
                           %span.glyphicon.glyphicon-edit
                           Edit
                       .col-md-3
-                        = link_to domain_path(administrator), method: :delete, data: { confirm: 'Are you sure ?' } do
+                        = link_to domain_path(domain), method: :delete, data: { confirm: 'Are you sure ?' } do
                           %span.glyphicon.glyphicon-trash
                           Delete
