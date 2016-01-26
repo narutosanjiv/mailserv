@@ -1,0 +1,20 @@
+.modal-dialog{ role: :document }
+  .modal-content
+    .modal-header
+      %button.close{ type: :button, 'data-dismiss': :modal, 'aria-hidden': "true" } &times;
+      %h4.modal-title#domainModal Domain modal
+    = form_for domain, remote: true do |f|
+      .modal-body
+        %ul.form-errors
+        .form-group
+          = f.label :name
+          = f.text_field :name, class: 'form-control'
+        .form-group
+          = f.label :Quota
+          = f.text_field :allowed_quota, class: 'form-control'
+        .form-group
+          = f.label :max_quota
+          = f.password_field :max_allowed_quota, class: 'form-control'
+      .modal-footer
+        %button.btn.btn-default{ 'data-dismiss': :modal } Close
+        = f.submit 'Submit', class: 'btn btn-primary'
