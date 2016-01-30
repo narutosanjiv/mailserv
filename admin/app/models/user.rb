@@ -2,6 +2,8 @@ class User
   include Mongoid::Document
   
   authenticates_with_sorcery!
+  
+  belongs_to :domain  
 
   validates :password, length: { minimum: 3 }, if: -> { new_record? || changes["password"] }
   validates :password, confirmation: true, if: -> { new_record? || changes["password"] }
