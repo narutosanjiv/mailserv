@@ -24,3 +24,19 @@ $ ->
 
     # Open up modal
     $('#addDomain').modal('show')
+
+$('#domain_new').click (e) ->
+    e.preventDefault()
+
+    # Clear all input fields
+    $.each $('#new_domain input:text'), (key, element) ->
+      $(element).val('')
+
+    # Clear all errors
+    $('ul.form-errors').html('')
+
+    # Set form action to create administrator
+    $('#new_domain').attr({ action: '/domains', method: 'post' })
+
+    # Open up modal
+    $('#addDomain').modal('show')

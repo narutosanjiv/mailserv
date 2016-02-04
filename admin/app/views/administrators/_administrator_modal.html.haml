@@ -12,6 +12,9 @@
         .form-group
           = f.label :email
           = f.text_field :email, class: 'form-control'
+        / .form-group 
+        /   = f.label :domain
+        /   = f.select :domain, Domain.all
         .form-group
           = f.label :password
           = f.password_field :password, class: 'form-control'

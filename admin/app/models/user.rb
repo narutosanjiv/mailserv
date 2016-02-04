@@ -10,5 +10,4 @@ class User
   validates :password_confirmation, presence: true, if: -> { new_record? || changes["password"] }
 
   validates :email, uniqueness: true
-  
 end
