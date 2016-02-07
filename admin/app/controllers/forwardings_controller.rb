@@ -13,12 +13,12 @@ class ForwardingsController < ApplicationController
     flash[:notice] = 'Forwarding successfully created.' if @forwarding.save
 
     respond_to do |format|
-      format.js { render 'administrators/upsert' }
+      format.js { render 'forwardings/upsert' }
     end
   end
 
   def update
-    flash[:notice] = 'Forwarding successfully updated.' if @user.update(user_params)
+    flash[:notice] = 'Forwarding successfully updated.' if @forwarding.update(forwarding_params)
 
     respond_to do |format|
       format.js { render 'administrators/upsert' }
@@ -27,12 +27,12 @@ class ForwardingsController < ApplicationController
 
   def destroy
     @forwarding.destroy
-    redirect_to domain_forwardings_path(params[:domain_id]), notice: 'User deleted successfully.'
+    redirect_to domain_forwardings_path(params[:domain_id]), notice: 'Forwarding deleted successfully.'
   end
 
   private
 
-  def user_params
+  def forwarding_params
     params.fetch(:forwarding, {}).permit(:source, :destination)
   end
 
@@ -41,7 +41,7 @@ class ForwardingsController < ApplicationController
   end
 
   def build_get_forwarding
-    @forwarding = @domain.forwardings.build(user_params)
+    @forwarding = @domain.forwardings.build(forwarding_params)
   end
 
   def get_domain

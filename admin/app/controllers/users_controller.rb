@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     flash[:notice] = 'User successfully created.' if @user.save
 
     respond_to do |format|
-      format.js { render 'administrators/upsert' }
+      format.js { render 'users/upsert' }
     end
   end
 
@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     flash[:notice] = 'User successfully updated.' if @user.update(user_params)
 
     respond_to do |format|
-      format.js { render 'administrators/upsert' }
+      format.js { render 'users/upsert' }
     end
   end
 

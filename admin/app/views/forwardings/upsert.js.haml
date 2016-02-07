@@ -1,0 +1,4 @@
+- if @forwarding.valid?
+  location.reload()
+- else
+  $('ul.form-errors').html(#{raw @forwarding.errors.full_messages.map{ |error| "<li class='text-danger'>#{error}</li>" } })

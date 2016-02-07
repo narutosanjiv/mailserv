@@ -3,7 +3,7 @@
     .modal-header
       %button.close{ type: :button, 'data-dismiss': :modal, 'aria-hidden': "true" } &times;
       %h4.modal-title#userModal User modal
-    = form_for administrator, remote: true do |f|
+    = form_for user, url: "/", remote: true do |f|
       .modal-body
         %ul.form-errors
         .form-group
