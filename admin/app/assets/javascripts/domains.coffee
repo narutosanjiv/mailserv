@@ -27,7 +27,6 @@ $ ->
 
 $('#domain_new').click (e) ->
     e.preventDefault()
-    alert 'aaaaaaaaa'
     # Clear all input fields
     $.each $('#new_domain input:text'), (key, element) ->
       $(element).val('')
