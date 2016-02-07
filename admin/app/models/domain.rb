@@ -2,7 +2,7 @@ class Domain
   include Mongoid::Document
   
   has_many :users
-  has_many :forwarding
+  has_many :forwardings
   
   field :allowed_quota, type: Integer, default: 2000
   field :max_allowed_quota, type: Integer, default: 5000

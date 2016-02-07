@@ -1,17 +1,4 @@
 .row
-  .col-lg-12.page-header
-    .row
-      .col-md-4
-        %h1 Domains
-      .col-md-4.col-md-offset-4
-        .pull-right
-          %h1
-            = link_to 'Add Domain', '#', id: 'domain_new', class: 'btn btn-primary btn-lg', data: { toggle: :modal, 'target': '#addDomain' }
-
-.modal.fade#addDomain{ tabindex: '-1', role: :dialog, 'aria-labelledby': :adminDomain, 'aria-hidden': "true" }
-  = render partial: 'domain_modal', locals: { domain: @domain }
-
-.row
   .col-lg-12
     .panle.panel-default
       .panle-body
@@ -19,16 +6,14 @@
           %table.table.table-striped.table-bordered.table-hover#dataTable-Domain
             %thead
               %tr
-                %th Name
-                %th Quota
-                %th Max Quota
+                %th Username
+                %th Email
                 %th Actions
             %tbody
-              - @domains.each do |domain|
+              - users.each do |user|
                 %tr
-                  %td= domain.name
-                  %td= domain.allowed_quota
-                  %td= domain.max_allowed_quota
+                  %td= user.name
+                  %td= user.email
                   %td
                     .row
                       .col-sm-2
@@ -51,3 +36,4 @@
                         = link_to domain_path(domain) do
                           %span.glyphicon.glyphicon-info-sign
                           Info
+

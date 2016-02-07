@@ -1,8 +1,10 @@
 class DomainsController < ApplicationController
   before_action :build_domain, only: [:index, :create]
-  before_action :get_domain, only: [:update, :destroy]
+  before_action :get_domain, only: [:update, :destroy, :show]
 
   def index
+    @user = User.new
+    @forwarding = Forwarding.new
     @domains = Domain.order(name: :asc)
   end
 
@@ -20,6 +22,11 @@ class DomainsController < ApplicationController
     respond_to do |format|
       format.js { render 'domains/upsert' }
     end
+  end
+
+  def show
+    @users = @domain.users
+    @forwardings = @domain.forwardings
   end
 
   def destroy

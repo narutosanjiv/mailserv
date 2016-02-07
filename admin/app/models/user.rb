@@ -3,6 +3,9 @@ class User
   
   authenticates_with_sorcery!
   
+  field :name, type: String
+  field :is_admin, type: Boolean
+
   belongs_to :domain  
 
   validates :password, length: { minimum: 3 }, if: -> { new_record? || changes["password"] }

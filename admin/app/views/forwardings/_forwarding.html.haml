@@ -1,0 +1,17 @@
+  .modal-content
+    .modal-header
+      %button.close{ type: :button, 'data-dismiss': :modal, 'aria-hidden': "true" } &times;
+      %h4.modal-title#forwardingModal User modal
+    = form_for forwarding, remote: true do |f|
+      .modal-body
+        %ul.form-errors
+        .form-group
+          = f.label :source
+          = f.text_field :source, class: 'form-control'
+        .form-group
+          = f.label :email
+          = f.text_area :destination, class: 'form-control'
+
+      .modal-footer
+        %button.btn.btn-default{ 'data-dismiss': :modal } Close
+        = f.submit 'Submit', class: 'btn btn-primary'
