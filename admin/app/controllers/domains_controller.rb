@@ -25,8 +25,12 @@ class DomainsController < ApplicationController
   end
 
   def show
-    @users = @domain.users
+    @users = @domain.users.collect(&:self)
     @forwardings = @domain.forwardings
+
+    @user = @domain.users.build#User.new(domain: @domain)
+    @forwarding = @domain.forwardings.build # Forwarding.new(domain: @domain)
+
   end
 
   def destroy

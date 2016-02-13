@@ -21,7 +21,7 @@
                           %span.glyphicon.glyphicon-edit
                           Edit
                       .col-sm-2
-                        = link_to domain_user_path(domain, user), method: :delete, data: { confirm: 'Are you sure ?' } do
+                        = link_to domain_user_path(@domain, user), method: :delete, data: { confirm: 'Are you sure ?' } do
                           %span.glyphicon.glyphicon-trash
                           Delete
                       

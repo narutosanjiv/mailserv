@@ -1,7 +1,24 @@
 .row
+  .col-sm-2
+    = link_to '#', id: "domain#{@domain.id}_user_new", data: { toggle: :modal, 'target': '#addDomainUser' } do
+      %span.glyphicon.glyphicon-plus
+      Add User
+   
+  .col-sm-3
+    = link_to '#', id: "domain#{@domain.id}_forwarding_new", data: { toggle: :modal, 'target': '#addDomainForwarding' } do
+      %span.glyphicon.glyphicon-plus
+      Add Forwarding
+  .model.fade#addDomainUser{ tabindex: '-1', role: :dialog, 'aria-labelledby': :adminDomainUser, 'aria-hidden': "true" }
+    = render partial: 'users/user_modal', locals: { user: @user }
+
+  .model.fade#addDomainForwarding{ tabindex: '-1', role: :dialog, 'aria-labelledby': :adminDomainForwarding, 'aria-hidden': "true" }
+    = render partial: 'forwardings/forwarding_modal', locals: { forwarding: @forwarding }
+
+.row
   #user_lists
     = render 'users', users: @users
 
 .row
   #forwarding_lists
-    = render 'forwardings', forwardings: @forwardings 	
+    = render 'forwardings', forwardings: @forwardings   
+

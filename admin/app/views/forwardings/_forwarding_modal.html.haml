@@ -2,7 +2,7 @@
   .modal-header
     %button.close{ type: :button, 'data-dismiss': :modal, 'aria-hidden': "true" } &times;
     %h4.modal-title#forwardingModal User modal
-  = form_for forwarding, url: "/", remote: true do |f|
+  = form_for forwarding, url: domain_forwardings_path(@domain), remote: true do |f|
     .modal-body
       %ul.form-errors
       .form-group
