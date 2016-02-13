@@ -1,23 +1,34 @@
-.row
-  .col-sm-2
-    = link_to '#', id: "domain#{@domain.id}_user_new", data: { toggle: :modal, 'target': '#addDomainUser' } do
-      %span.glyphicon.glyphicon-plus
-      Add User
-   
-  .col-sm-3
-    = link_to '#', id: "domain#{@domain.id}_forwarding_new", data: { toggle: :modal, 'target': '#addDomainForwarding' } do
-      %span.glyphicon.glyphicon-plus
-      Add Forwarding
-  .model.fade#addDomainUser{ tabindex: '-1', role: :dialog, 'aria-labelledby': :adminDomainUser, 'aria-hidden': "true" }
+.col-lg-12.page-header
+  .row
+    .col-md-4
+      %h1 Users
+    .col-md-4.col-md-offset-4
+      .pull-right
+        %h1
+          = link_to '#', id: "domain#{@domain.id}_user_new", class: 'btn btn-primary btn-lg', data: { toggle: :modal, 'target': '#addDomainUser' } do
+            %span.glyphicon.glyphicon-plus
+            Add User
+
+  .modal.fade#addDomainUser{ tabindex: '-1', role: :dialog, 'aria-labelledby': :adminDomainUser, 'aria-hidden': "true" }
     = render partial: 'users/user_modal', locals: { user: @user }
 
-  .model.fade#addDomainForwarding{ tabindex: '-1', role: :dialog, 'aria-labelledby': :adminDomainForwarding, 'aria-hidden': "true" }
+  .modal.fade#addDomainForwarding{ tabindex: '-1', role: :dialog, 'aria-labelledby': :adminDomainForwarding, 'aria-hidden': "true" }
     = render partial: 'forwardings/forwarding_modal', locals: { forwarding: @forwarding }
 
 .row
   #user_lists
     = render 'users', users: @users
 
+.col-lg-12.page-header
+  .row
+    .col-md-4
+      %h1 Users
+    .col-md-4.col-md-offset-4
+      .pull-right
+        %h1
+          = link_to '#', id: "domain#{@domain.id}_forwarding_new", class: 'btn btn-primary btn-lg', data: { toggle: :modal, 'target': '#addDomainForwarding' } do
+            %span.glyphicon.glyphicon-plus
+            Add Forwarding
 .row
   #forwarding_lists
     = render 'forwardings', forwardings: @forwardings   

@@ -36,26 +36,15 @@
                   %td= domain.allowed_quota
                   %td= domain.max_allowed_quota
                   %td
-                    .row
-                      .col-sm-2
-                        = link_to '#', class: 'domain_edit', data: { attributes: domain.json_presentation } do
-                          %span.glyphicon.glyphicon-edit
-                          Edit
-                      .col-sm-2
-
-                        = link_to domain_path(domain), method: :delete, data: { confirm: 'Are you sure ?' } do
-                          %span.glyphicon.glyphicon-trash
-                          Delete
-                      .col-sm-2
-                        = link_to '#', id: "domain#{domain.id}_user_new", data: { toggle: :modal, 'target': '#addDomainUser' } do
-                          %span.glyphicon.glyphicon-plus
-                          Add User
-                       
-                      .col-sm-3
-                        = link_to '#', id: "domain#{domain.id}_forwarding_new", data: { toggle: :modal, 'target': '#addDomainForwarding' } do
-                          %span.glyphicon.glyphicon-plus
-                          Add Forwarding
-                      .col-sm-2
-                        = link_to domain_path(domain) do
-                          %span.glyphicon.glyphicon-info-sign
-                          Info
+                    .col-sm-2
+                      = link_to '#', class: 'domain_edit', data: { attributes: domain.json_presentation } do
+                        %span.glyphicon.glyphicon-edit
+                        Edit
+                    .col-sm-2
+                      = link_to domain_path(domain), method: :delete, data: { confirm: 'Are you sure ?' } do
+                        %span.glyphicon.glyphicon-trash
+                        Delete
+                    .col-sm-2
+                      = link_to domain_path(domain) do
+                        %span.glyphicon.glyphicon-info-sign
+                        Info
