@@ -40,7 +40,7 @@ class ForwardingsController < ApplicationController
     @forwarding = @domain.forwardings.where(id: params[:id]).first
   end
 
-  def build_get_forwarding
+  def build_forwarding
     @forwarding = @domain.forwardings.build(forwarding_params)
   end
 

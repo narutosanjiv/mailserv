@@ -25,17 +25,16 @@ class DomainsController < ApplicationController
   end
 
   def show
-    @users = @domain.users.collect(&:self)
-    @forwardings = @domain.forwardings
+    @users = @domain.users.to_a
+    @forwardings = @domain.forwardings.to_a
 
     @user = @domain.users.build#User.new(domain: @domain)
     @forwarding = @domain.forwardings.build # Forwarding.new(domain: @domain)
-
   end
 
   def destroy
     @domain.destroy
-    redirect_to domains_path, notice: 'Domain deleted successfully.'
+    redirect_to domain_path, notice: 'Domain deleted successfully.'
   end
 
   private

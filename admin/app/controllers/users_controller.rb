@@ -27,13 +27,13 @@ class UsersController < ApplicationController
 
   def destroy
     @user.destroy
-    redirect_to domain_users_path(params[:domain_id]), notice: 'User deleted successfully.'
+    redirect_to domain_path(params[:domain_id]), notice: 'User deleted successfully.'
   end
 
   private
 
   def user_params
-    params.fetch(:administrator, {}).permit(:name, :email, :password, :password_confirmation, :is_admin)
+    params.fetch(:user, {}).permit(:name, :email, :password, :password_confirmation, :is_admin)
   end
 
   def get_administrators
