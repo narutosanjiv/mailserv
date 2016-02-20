@@ -9,6 +9,8 @@
 #
 every 1.day do  
   rake "munin:copy_daily"
+  rake "munin:copy_weekly"
+  rake "munin:copy_monthly"
 end
 #
 # every 4.days do

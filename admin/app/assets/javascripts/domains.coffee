@@ -24,6 +24,21 @@ $ ->
 
     # Open up modal
     $('#addDomain').modal('show')
+  
+  $('#addDomain').on 'show.bs.modal', (e) ->
+    alert 'show'
+
+    # Clear all input fields
+    $.each $('#new_domain input:text'), (key, element) ->
+      $(element).val('')
+
+    # Clear all errors
+    $('ul.form-errors').html('')
+
+    return true
+
+
+  
 
 $('#domain_new').click (e) ->
     e.preventDefault()

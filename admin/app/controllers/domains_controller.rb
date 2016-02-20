@@ -25,6 +25,7 @@ class DomainsController < ApplicationController
   end
 
   def show
+
     @users = @domain.users.to_a
     @forwardings = @domain.forwardings.to_a
 
@@ -34,7 +35,7 @@ class DomainsController < ApplicationController
 
   def destroy
     @domain.destroy
-    redirect_to domain_path, notice: 'Domain deleted successfully.'
+    redirect_to domains_path, notice: 'Domain deleted successfully.'
   end
 
   private
