@@ -12,23 +12,23 @@ namespace :munin do
   desc "Copying the munin graph"
  
   task :copy_daily => :environment do 
-    filenames = ["cpu-day.png", "memory-day.png", "swap-day.png"]
+    filenames = ["cpu-day.png", "memory-day.png"]
     graph_file_copy(filenames)
   end  
 
 
   task :copy_weekly => :environment do 
-    filenames = ["cpu-week.png", "memory-week.png", "swap-week.png"]
+    filenames = ["cpu-week.png", "memory-week.png"]
     graph_file_copy(filenames)
   end  
   
   task :copy_monthly => :environment do 
-    filenames = ["cpu-month.png", "memory-month.png", "swap-month.png"]
+    filenames = ["cpu-month.png", "memory-month.png"]
     graph_file_copy(filenames)
   end
 
   task :copy_yearly => :environment do 
-    filenames =  ["cpu-year.png", "memory-year.png", "swap-year.png"]
+    filenames =  ["cpu-year.png", "memory-year.png"]
     graph_file_copy(filenames)
   end
 end

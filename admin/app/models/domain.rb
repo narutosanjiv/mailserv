@@ -14,6 +14,7 @@ class Domain
 
   #less and equal to 5000mb
   validates_numericality_of :max_allowed_quota, less_than_or_equal_to: 5000, greater_than: 0
+  validates_format_of :name, with: /^(([a-zA-Z]{1})|([a-zA-Z]{1}[a-zA-Z]{1})|([a-zA-Z]{1}[0-9]{1})|([0-9]{1}[a-zA-Z]{1})|([a-zA-Z0-9][a-zA-Z0-9-_]{1,61}[a-zA-Z0-9]))\.([a-zA-Z]{2,6}|[a-zA-Z0-9-]{2,30}\.[a-zA-Z]{2,3})$/ 
 
   def json_presentation
     as_json(only: [:_id, :name, :allowed_quota, :max_allowed_quota])

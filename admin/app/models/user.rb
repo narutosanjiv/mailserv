@@ -13,6 +13,7 @@ class User
   validates :password_confirmation, presence: true, if: -> { new_record? || changes["password"] }
 
   validates :email, uniqueness: true
+  
 
   def json_presentation
     as_json(only: [:_id, :name, :is_admin, :email])
