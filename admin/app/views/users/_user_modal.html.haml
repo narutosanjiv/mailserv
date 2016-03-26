@@ -11,8 +11,11 @@
           = f.text_field :name, class: 'form-control'
         .form-group
           = f.label :email
-          = f.text_field :email, class: 'form-control'
-        / .form-group 
+          .input-group
+            = f.text_field :email, class: 'form-control'
+            %span.input-group-addon
+              = @domain.name
+        / .form-group
         /   = f.label :domain
         /   = f.select :domain, Domain.all
         .form-group

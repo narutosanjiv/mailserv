@@ -14,8 +14,16 @@ class User
 
   validates :email, uniqueness: true
   
+  before_save :create_email_from_domain  
 
   def json_presentation
     as_json(only: [:_id, :name, :is_admin, :email])
   end
+
+
+  private
+
+    def create_email_from_domain
+      self.email = self.email.try(:strip) + "@" + self.domain.name if self.email
+    end
 end

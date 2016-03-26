@@ -20,8 +20,7 @@
                         = link_to '#', class: 'domain_user_edit', data: { attributes: user.json_presentation } do
                           %span.glyphicon.glyphicon-edit
                           Edit
-                      .col-sm-2
+                      .col-sm-3
                         = link_to domain_user_path(@domain, user), method: :delete, data: { confirm: 'Are you sure ?' } do
                           %span.glyphicon.glyphicon-trash
                           Delete
-                      

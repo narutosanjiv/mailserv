@@ -5,7 +5,7 @@
     .col-md-4.col-md-offset-4
       .pull-right
         %h1
-          = link_to '#', id: "domain#{@domain.id}_user_new", class: 'btn btn-primary btn-lg', data: { toggle: :modal, 'target': '#addDomainUser' } do
+          = link_to '#', id: "domain_user_new", class: 'btn btn-primary btn-lg', data: { toggle: :modal, 'target': '#addDomainUser' } do
             %span.glyphicon.glyphicon-plus
             Add User
 
@@ -22,7 +22,7 @@
 .col-lg-12.page-header
   .row
     .col-md-4
-      %h1 Users
+      %h1 Forwardings
     .col-md-4.col-md-offset-4
       .pull-right
         %h1
@@ -31,5 +31,4 @@
             Add Forwarding
 .row
   #forwarding_lists
-    = render 'forwardings', forwardings: @forwardings   
-
+    = render 'forwardings', forwardings: @forwardings

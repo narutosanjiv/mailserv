@@ -21,3 +21,4 @@
 //= require administrators
 //= require dashboard
 //= require domains
+//= require domains/info

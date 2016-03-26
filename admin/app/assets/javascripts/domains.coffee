@@ -24,10 +24,13 @@ $ ->
 
     # Open up modal
     $('#addDomain').modal('show')
-  
-  $('#addDomain').on 'show.bs.modal', (e) ->
-    alert 'show'
 
+  $('#addDomain').on 'show.bs.modal', (e) ->
+
+    console.log("e.target")
+    console.debug(e.relatedTarget)
+    if $(e.relatedTarget).attr('id') != 'domain_new'
+      return true
     # Clear all input fields
     $.each $('#new_domain input:text'), (key, element) ->
       $(element).val('')
@@ -38,7 +41,7 @@ $ ->
     return true
 
 
-  
+
 
 $('#domain_new').click (e) ->
     e.preventDefault()
